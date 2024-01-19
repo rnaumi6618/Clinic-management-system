@@ -1,0 +1,15 @@
+﻿@model BPMeasurement
+@{
+    ViewData["Title"] = "Delete the Measurement";
+}
+<h4>@Model.SystolicValue/@Model.DiastolicValue (Taken on @Model.DateofReading )</h4>
+<p>Are you sure You want to delete this Measurement data?</p>
+<form asp-controller="Measurement" asp-action="Delete" method="post" enctype="application/x-www-form-urlencoded">
+    <!-- Add a hidden form field that contains the measurement's ID:' -->
+    <input type="hidden" asp-for="BPMeasurementId" />
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <button class="btn-btn-primary" asp-controller="Measurement" asp-action="List">Cancel</button>
+    </div>
+</form>
+

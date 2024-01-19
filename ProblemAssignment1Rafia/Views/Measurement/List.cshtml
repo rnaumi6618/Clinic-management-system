@@ -1,0 +1,62 @@
+﻿@model List<BPMeasurement>
+@{
+    ViewData["Title"] = "All Measurements";
+}
+<a asp-controller="Measurement" asp-action="Add">Add Measurements</a>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Reading </th>
+            <th>Category </th>
+            <th>Position </th>
+            <th>Date Taken</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @foreach (BPMeasurement bp in Model)
+    {
+        <tr>
+            <td style="color: @GetCategoryColor(bp)">@bp.SystolicValue / @bp.DiastolicValue</td>
+            <td style="color: @GetCategoryColor(bp)">@bp.GetCategory()</td>
+            <td>@bp.Position?.PositionName</td>
+            <td>@bp.DateofReading?.ToString("yyyy-MM-dd")</td>
+            
+            <td>
+                <a asp-controller="Measurement" asp-action="Edit" asp-route-id="@bp.BPMeasurementId">Edit</a>
+                <span class="mx-2">|</span>
+                <a asp-controller="Measurement" asp-action="Delete" asp-route-id="@bp.BPMeasurementId">Delete</a>
+            </td>
+        </tr>
+    }
+    <tbody>
+    </tbody>
+</table>
+<div>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+    TempData["Message"] = null;
+}
+</div>
+@functions {
+    string GetCategoryColor(BPMeasurement bp)
+    {
+        switch (bp.GetCategory())
+        {
+            case "Normal":
+                return "darkgreen";
+            case "Elevated":
+                return "blue";
+            case "Hypertension Stage 1":
+                return "orange";
+            case "Hypertension Stage 2":
+                return "orangered";
+            case "Hypertensive Crisis":
+                return "darkred";
+            default:
+                return "black";
+        }
+    }
+}

@@ -1,0 +1,39 @@
+﻿@model UpdateMeasurementViewModel
+@{
+    ViewData["Title"] = "Add a new Measurement";
+}
+<form asp-controller="Measurement" asp-action="Add" method="post" enctype="application/x-www-form-urlencoded">
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+    <div class="form-group">
+        <label asp-for="BPMeasurement.SystolicValue">SystolicValue</label>
+        <input type="text" asp-for="BPMeasurement.SystolicValue" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BPMeasurement.DiastolicValue">DiastolicValue</label>
+        <input type="text" asp-for="BPMeasurement.DiastolicValue" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BPMeasurement.PositionId">Position</label>
+        <!-- add a drop-down for genre options: -->
+        <select asp-for="BPMeasurement.PositionId" class="form-control">
+            <option value="">Select a Position..</option>
+            @foreach (Position p in Model.Positions)
+            {
+                <option value="@p.PositionId">@p.PositionName</option>
+            }
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="BPMeasurement.DateofReading">Date Taken</label>
+        <input type="text" asp-for="BPMeasurement.DateofReading" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Add</button>
+        <button class="btn-btn-primary" asp-controller="Measurement" asp-action="List">Cancel</button>
+    </div>
+</form>
